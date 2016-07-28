@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Rule;
+use App\Exceptions\ProgramException;
+
 
 class RuleController extends Controller
 {
 
     public function index()
     {
-        echo 123;die;
+       throw new \Exception('我是错误信息');
     }
 
 

@@ -3,18 +3,17 @@
 namespace App\Exceptions;
 use Exception;
 
+class ProgramException extends Exception{
 
-class ShellException extends Exception{
+    protected $message;
+    protected $code;
 
-    private $message;
-    private $code;
-
-    public function __construct($message, $code, Exception $previous)
+    public function __construct($message, $code = 0)
     {
         $this->message = $message;
         $this->code = $code;
 
-        parent::__construct($message, $code, $previous);
+        parent::__construct($message, $code);
     }
 
     public function getOutCode()
