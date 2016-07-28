@@ -3,38 +3,29 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\CronTask;
+use App\Exceptions\ShellException;
+use Log;
+
 
 class GetCronTasks extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
+
+    protected $cronTask = null;
     protected $signature = 'cron:read';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'read cron tasks from server machine everyday';
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    protected $cronFile = '';
+
+    public function __construct(CronTask $cronTask)
     {
+        $this->cronTask = $cronTask;
+        $this->cronFile = config('shell.cron_task_file');
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
+
     public function handle()
     {
         /**
@@ -43,6 +34,23 @@ class GetCronTasks extends Command
          *  2, 初始化之后,每当cron有变动时才会触发该脚本
          */
 
-        
+        $cronFileContents = file_get_contents($this->cronFile);
+        $crons = array_filter(explode("\n", $cronFileContents));
+
+        foreach ($crons as $cron) {
+            $result = $this->cronTask->create(
+                [
+                    'content' => $cron,
+                    'description' => '暂无描述',  //等最后总结一下所有的脚本关键字再添加相应的描述
+                ]
+            );
+            if (!isset($result->id) || empty($result->id)) {
+                Log::error('cron insert error');
+            } else {
+                Log::info('cron insert success, id is : ' . $result->id);
+            }
+
+        }
+
     }
 }
