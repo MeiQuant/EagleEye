@@ -3,11 +3,12 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Exceptions\ShellException;
 use Log;
 use App\Data;
 use App\Rule;
 use Exception;
+use App\Exceptions\ProgramException;
+
 
 class InsertDataByRules extends Command
 {
@@ -32,15 +33,13 @@ class InsertDataByRules extends Command
 
         Rule::chunk(200, function ($rules) {
             foreach ($rules as $rule) {
-                try {
-                    $data['rule_id'] = $rule->id;
-                    $data['hash_id'] = $rule->hash_id;
-                    $data['content'] = eval($rule->code);
-                    $this->_insertData($data);
-                } catch (Exception $e) {
-                    Log::error('exception :' . $e->getMessage());
-                    continue;
+                $data['rule_id'] = $rule->id;
+                $data['hash_id'] = $rule->hash_id;
+                $data['content'] = eval($rule->code);
+                if (empty($data['content'])) {
+                    Log::error('抓取内容为空');
                 }
+                $this->_insertData($data);
             }
         });
 
@@ -48,6 +47,7 @@ class InsertDataByRules extends Command
 
     private function _insertData($data)
     {
+
         $result = Data::create(
             [
                 'rule_id' => $data['rule_id'],

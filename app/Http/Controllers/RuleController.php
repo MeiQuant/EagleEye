@@ -15,7 +15,7 @@ class RuleController extends Controller
 
     public function index()
     {
-       throw new \Exception('我是错误信息');
+       throw new ProgramException('我是错误信息');
     }
 
 
@@ -42,7 +42,8 @@ class RuleController extends Controller
 
         return response()->json(
             [
-                'status' => 'success',
+                'status' => true,
+                'message' => '添加成功'
             ]
         );
     }

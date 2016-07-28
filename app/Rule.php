@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 class Rule extends Model
 {
 
@@ -13,9 +12,7 @@ class Rule extends Model
 
     protected $table = 'rules';
 
-    protected $fillable = ['id', 'platform_id', 'code', 'hash_id'];
+    protected $fillable = ['platform_id', 'code', 'hash_id'];
 
     protected $dates = ['deleted_at'];
-
-
 }
