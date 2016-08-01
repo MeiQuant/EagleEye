@@ -30,7 +30,7 @@ for($i=0; $i<=$pagePlatCount; $i++) {
         $pageAssetContent = file_get_contents('https://www.zhenrongbao
         .com/plat/plat_credit_assemble?pid=2&current_page=1&
     credit_plat_id='. $pagePlatContent['credit_plat_id'].'&_access_token=&platform=pc');  //某个平台下某一页资产的相关信息
-        $results['plat_id']['all_assets'][] = [
+        $results['all_assets']['plat_id'][] = [
             'name' => $pageAssetContent['credit_name'], //资产名称
             'profit_years_percent' => round($pageAssetContent['profit_years_percent'], 2), //预期收益率
             'amount' => (int)$pageAssetContent['amount'], //投资金额
