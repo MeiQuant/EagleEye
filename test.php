@@ -21,8 +21,10 @@ for($i=1; $i<=$pagePlatCount; $i++) {
         //平台的信息如果需要可以再加
         $platId = $platInfo['credit_plat_id']; //平台id
         $platName = $platInfo['plat_name']; //平台名字
-        $assetType =
+        $assetType = $platInfo['plat_type_name']; //平台资产类型
+
         //查询某个平台下面的所有资产,首先也是获取资产的分页总数
+
         $pageAssetData = file_get_contents('https://www.zhenrongbao.com/plat/plat_credit_assemble?pid=2&current_page=1&credit_plat_id='. $platId .'&_access_token=&platform=pc');
         $pageAssetData = json_decode($pageAssetData, true);
         $pageAssetCount = $pageAssetData['data']['page_count'];
@@ -34,13 +36,13 @@ for($i=1; $i<=$pagePlatCount; $i++) {
                 file_put_contents('/tmp/asset.log', $assetInfo['credit_name'] . "\n");
                 $results[$platName][] = [
                     'name' => $assetInfo['credit_name'], //资产名称
-                    'profit_years_percent' => round($assetInfo['profit_years_percent'], 2), //预期收益率
+                    'profit' => round($assetInfo['profit_years_percent'], 2), //预期收益率
                     'amount' => (int)$assetInfo['amount'], //投资金额
                     'loan_life' => $assetInfo['loan_life'], //还款期限
                     'start_date' => $assetInfo['start_date'], //还款开始时间
                     'end_date' => $assetInfo['end_date'], //还款结束时间
                     'loan_amount' => $assetInfo['loan_amount'], //债权总额
-                    'asset_type' => '123'
+                    'asset_type' => $assetType
                 ];
             }
 
@@ -56,5 +58,5 @@ for($i=1; $i<=$pagePlatCount; $i++) {
 
 }
 
-print_r($results);
+return $results;
 
