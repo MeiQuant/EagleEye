@@ -12,7 +12,7 @@ class Rule extends Model
 
     protected $table = 'rules';
 
-    protected $fillable = ['platform_id', 'code', 'hash_id'];
+    protected $fillable = ['platform_id', 'code', 'type'];
 
     protected $dates = ['deleted_at'];
 }
