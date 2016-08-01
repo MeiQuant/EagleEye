@@ -1,34 +1,21 @@
 <?php
 
 /*
- *  ==============type===1001========**真融宝总交易额
+ * 真融宝平台相关信息
  */
-
 $content = file_get_contents('https://www.zhenrongbao.com');
-$pattern = '/<p><span class="icon"><\/span>累计投资总额：<span>￥(.*?)<\/span><\/p>/i';
-preg_match_all($pattern, $content, $matches);
-if (!empty($matches) && is_array($matches)) {
-    return str_replace(',', '', $matches[1][0]);
-}
+$pattern1 = '/<p><span class="icon"><\/span>累计投资总额：<span>￥(.*?)<\/span><\/p>/i';
+$pattern2 = '/投资人数：<span>(.*?)人<\/span>/i';
+preg_match_all($pattern1, $content, $matches1);
+preg_match_all($pattern2, $content, $matches2);
+return [
+    'platform_name' => '真融宝',
+    'total_invest_amounts' => str_replace(',', '', $matches1[1][0]),
+    'total_invest_persons' => str_replace(',', '', $matches2[1][0]),
+    'total_profits' => 0
+];
 
 
-/*
- *  ==============type===1002========**真融宝投资人数
- */
-
-$content = file_get_contents('https://www.zhenrongbao.com');
-$pattern = '/投资人数：<span>(.*?)人<\/span>/i';
-preg_match_all($pattern, $content, $matches);
-if (!empty($matches) && is_array($matches)) {
-    return str_replace(',', '', $matches[1][0]);
-}
-
-
-/*
- * ==============type===1003========**真融宝为用户赚取的收益
- */
-
-return 0;
 
 
 /**

@@ -36,7 +36,7 @@ for($i=1; $i<=$pagePlatCount; $i++) {
                 file_put_contents('/tmp/asset.log', $assetInfo['credit_name'] . "\n");
                 $results[$platName][] = [
                     'name' => $assetInfo['credit_name'], //资产名称
-                    'profit' => round($assetInfo['profit_years_percent'], 2), //预期收益率
+                    'profit' => round($assetInfo['profit_years_percent'], 2), //
                     'amount' => (int)$assetInfo['amount'], //投资金额
                     'loan_life' => $assetInfo['loan_life'], //还款期限
                     'start_date' => $assetInfo['start_date'], //还款开始时间

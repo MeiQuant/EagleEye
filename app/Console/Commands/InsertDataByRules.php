@@ -8,7 +8,7 @@ use App\Data;
 use App\Rule;
 use Exception;
 use App\Exceptions\ProgramException;
-
+use App\Platform;
 
 class InsertDataByRules extends Command
 {
@@ -17,6 +17,9 @@ class InsertDataByRules extends Command
 
     protected $description = 'insert data by all rules everyday';
 
+    static $types = [
+        'platforms_info',
+    ];
 
     public function __construct()
     {
@@ -33,8 +36,12 @@ class InsertDataByRules extends Command
 
         Rule::chunk(200, function ($rules) {
             foreach ($rules as $rule) {
+                if (!in_array($rule->type, self::$types)) {
+                    Log::error('规则类型不在系统中, error');
+                    continue;
+                }
                 $data['rule_id'] = $rule->id;
-                $data['hash_id'] = $rule->hash_id;
+                $data['type'] = $rule->type;
                 $data['content'] = eval($rule->code);
                 if (empty($data['content'])) {
                     Log::error('抓取内容为空');
@@ -47,22 +54,24 @@ class InsertDataByRules extends Command
 
     private function _insertData($data)
     {
+        $type = $data['type'];
+        switch ($type) {
+            case 'platforms_info':
+                $platform = Platform::create(
+                    [
+                        'name' => $data['content']['platform_name'],
+                        'total_invest_amounts' => $data['content']['total_invest_amounts'],
+                        'total_invest_persons' => $data['content']['total_invest_persons'],
+                        'total_profits' => $data['content']['total_profits']
+                    ]
+                );
+                Log::info('平台相关信息更新成功,id为'. $platform->id .',时间为:' . date('Y-m-d H:i:s', time()));
+                break;
+            default:
+                echo 'error';die;
 
-        $result = Data::create(
-            [
-                'rule_id' => $data['rule_id'],
-                'hash_id' => $data['hash_id'],
-                'content' => $data['content']
-            ]
-        );
-
-        //考虑下异常情况
-
-        if (!isset($result->id) || empty($result->id)) {
-            Log::error('insert error');
-        } else {
-            Log::info('insert success, id is :' . $result->id);
         }
+        echo "over\n";
 
     }
 }
