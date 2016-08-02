@@ -22,7 +22,8 @@ class InsertDataByRules extends Command
 
     static $types = [
         'platforms_info',
-        'products_info'
+        'products_info',
+        'assets_info'
     ];
 
     public function __construct()
