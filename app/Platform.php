@@ -10,9 +10,10 @@ class Platform extends Model
 
     use SoftDeletes;
 
-    protected $table = 'platforms';
+    protected $table = 'platform_data';
 
-    protected $fillable = ['id', 'name', 'site', 'total_invest_amounts', 'total_invest_persons', 'total_profits'];
+    protected $fillable = ['id', 'platform_id', 'total_invest_amounts', 'total_invest_persons',
+        'total_profits'];
 
     protected $dates = ['deleted_at'];
 }

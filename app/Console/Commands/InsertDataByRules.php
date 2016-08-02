@@ -9,6 +9,7 @@ use App\Rule;
 use Exception;
 use App\Exceptions\ProgramException;
 use App\Platform;
+use App\Product;
 
 class InsertDataByRules extends Command
 {
@@ -19,6 +20,7 @@ class InsertDataByRules extends Command
 
     static $types = [
         'platforms_info',
+        'products_info'
     ];
 
     public function __construct()
@@ -55,17 +57,32 @@ class InsertDataByRules extends Command
     private function _insertData($data)
     {
         $type = $data['type'];
+        $data = $data['content'];
         switch ($type) {
             case 'platforms_info':
                 $platform = Platform::create(
                     [
-                        'name' => $data['content']['platform_name'],
-                        'total_invest_amounts' => $data['content']['total_invest_amounts'],
-                        'total_invest_persons' => $data['content']['total_invest_persons'],
-                        'total_profits' => $data['content']['total_profits']
+                        'platform_id' => $data['platform_id'],
+                        'total_invest_amounts' => $data['total_invest_amounts'],
+                        'total_invest_persons' => $data['total_invest_persons'],
+                        'total_profits' => $data['total_profits']
                     ]
                 );
                 Log::info('平台相关信息更新成功,id为'. $platform->id .',时间为:' . date('Y-m-d H:i:s', time()));
+                break;
+            case 'products_info':
+                $product = Product::create(
+                    [
+                        'product_id' => $data['product_id'],
+                        'total_invest_amounts' => $data['total_invest_amounts'],
+                        'total_invest_persons' => $data['total_invest_persons'],
+                        'total_profits' => $data['total_profits'],
+                        'asset_count' => $data['asset_count'],
+                        'plat_count' => $data['plat_count']
+                    ]
+                );
+
+                Log::info('产品相关信息更新成功,id为'. $product->id .',时间为:' . date('Y-m-d H:i:s', time()));
                 break;
             default:
                 echo 'error';die;

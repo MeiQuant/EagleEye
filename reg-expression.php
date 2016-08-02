@@ -9,7 +9,7 @@ $pattern2 = '/投资人数：<span>(.*?)人<\/span>/i';
 preg_match_all($pattern1, $content, $matches1);
 preg_match_all($pattern2, $content, $matches2);
 return [
-    'platform_name' => '真融宝',
+    'platform_id' => 1,
     'total_invest_amounts' => str_replace(',', '', $matches1[1][0]),
     'total_invest_persons' => str_replace(',', '', $matches2[1][0]),
     'total_profits' => 0
@@ -19,20 +19,25 @@ return [
 
 
 /**
- *  产品相关
+ *  真融宝定期产品相关
  */
 
 $contents = file_get_contents('https://www.zhenrongbao.com/dingqi');
+$dingqiContents = file_get_contents('https://www.zhenrongbao.com/plat/assemble?pid=2');
 $pattern = '/<p class="line-1">(.*)<\/p>/i';
+$dingqiPattern = '/<p class="number"><span>(.*)<\/span>/i';
 preg_match_all($pattern, $contents, $matches);
-if (!empty($matches) && is_array($matches)) {
-    return [
-        '总金额' => str_replace('￥', '', str_replace(',', '', $matches[1][1])),
-        '总人数' => $matches[1][0],
-        '帮用户赚取的金额' => str_replace('￥', '', str_replace(',', '', $matches[1][2]))
-    ];
+preg_match_all($dingqiPattern, $dingqiContents, $dingqiMatches);
+return [
+    'product_id' => 1,
+    'total_invest_amounts' => str_replace('￥', '', str_replace(',', '', $matches[1][1])),
+    'total_invest_persons' => $matches[1][0],
+    'total_profits' => str_replace('￥', '', str_replace(',', '', $matches[1][2])),
+    'asset_count' => $dingqiMatches[1][1],
+    'plat_count' => $dingqiMatches[1][2]
+];
 
-}
+
 
 
 

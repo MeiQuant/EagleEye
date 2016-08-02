@@ -13,12 +13,12 @@ class Product extends Model
 
     use SoftDeletes;
 
-    protected $table = 'products';
+    protected $table = 'product_data';
 
     protected $fillable =
         [
             'id',
-            'platform_id',
+            'product_id',
             'total_invest_amounts',
             'total_invest_persons',
             'total_profits',
