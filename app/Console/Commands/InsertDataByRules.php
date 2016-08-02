@@ -40,7 +40,6 @@ class InsertDataByRules extends Command
 
         Rule::chunk(200, function ($rules) {
             foreach ($rules as $rule) {
-                if ($rule->id > 2) continue;
                 if (!in_array($rule->type, self::$types)) {
                     Log::error('规则类型不在系统中, error');
                     continue;
