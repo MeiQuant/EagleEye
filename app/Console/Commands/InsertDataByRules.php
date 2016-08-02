@@ -10,6 +10,8 @@ use Exception;
 use App\Exceptions\ProgramException;
 use App\Platform;
 use App\Product;
+use App\Asset;
+
 
 class InsertDataByRules extends Command
 {
@@ -84,6 +86,31 @@ class InsertDataByRules extends Command
 
                 Log::info('产品相关信息更新成功,id为'. $product->id .',时间为:' . date('Y-m-d H:i:s', time()));
                 break;
+            case 'assets_info':
+                Asset::chunk(200, function($data){
+                    foreach ($data as $asset) {
+                        $asset = Asset::create(
+                            [
+                                'product_id' => $asset['product_id'],
+                                'name' => $asset['name'],
+                                'amount' => $asset['amount'] * 100,
+                                'profit' => $asset['profit'] * 100,
+                                'loan_lift' => $asset['loan_life'],
+                                'start_date' => $asset['start_date'],
+                                'end_date' => $asset['end_date'],
+                                'loan_amount' => $asset['loan_amount'] * 100,
+                                'type' => $asset['type']
+                            ]
+                        );
+
+                        Log::info('资产相关信息更新成功,id为'. $asset->id .',时间为:' . date('Y-m-d H:i:s', time()));
+
+                    }
+                });
+
+
+                break;
+
             default:
                 echo 'error';die;
 

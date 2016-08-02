@@ -13,7 +13,7 @@ class Asset extends Model
 
     use SoftDeletes;
 
-    protected $table = 'assets';
+    protected $table = 'asset_data';
 
     protected $fillable =
         [

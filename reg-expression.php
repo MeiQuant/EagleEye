@@ -80,6 +80,7 @@ for($i=1; $i<=$pagePlatCount; $i++) {
             foreach ($pageAssetContent as $assetInfo) {
                 file_put_contents('/tmp/asset.log', $assetInfo['credit_name'] . "\n");
                 $results[$platName][] = [
+                    'product_id' => 1,
                     'name' => $assetInfo['credit_name'], //资产名称
                     'profit_years_percent' => round($assetInfo['profit_years_percent'], 2), //预期收益率
                     'amount' => (int)$assetInfo['amount'], //投资金额
@@ -87,7 +88,7 @@ for($i=1; $i<=$pagePlatCount; $i++) {
                     'start_date' => $assetInfo['start_date'], //还款开始时间
                     'end_date' => $assetInfo['end_date'], //还款结束时间
                     'loan_amount' => $assetInfo['loan_amount'], //债权总额
-                    'asset_type' => $assetType
+                    'type' => $assetType
                 ];
             }
 
@@ -148,7 +149,7 @@ for($i=1; $i<=$pagePlatCount; $i++) {
                     'start_date' => $assetInfo['start_date'], //还款开始时间
                     'end_date' => $assetInfo['end_date'], //还款结束时间
                     'loan_amount' => $assetInfo['loan_amount'], //债权总额
-                    'asset_type' => $assetType
+                    'type' => $assetType
                 ];
             }
 
