@@ -17,3 +17,5 @@ Route::get('/', function () {
 
 
 Route::resource('rule', 'RuleController');
+
+Route::get('');

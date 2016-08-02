@@ -134,7 +134,7 @@ for($i=1; $i<=$pagePlatCount; $i++) {
             $pageAssetContent = json_decode($pageAssetContent, true);
             $pageAssetContent = $pageAssetContent['data']['credit_assemble'];
             foreach ($pageAssetContent as $assetInfo) {
-                file_put_contents('/tmp/asset.log', $assetInfo['credit_name'] . "\n");
+                file_put_contents('/tmp/current-asset.log', $assetInfo['credit_name'] . "\n");
                 $results[$platName][] = [
                     'name' => $assetInfo['credit_name'], //资产名称
                     'profit_years_percent' => round($assetInfo['profit_years_percent'], 2), //预期收益率
