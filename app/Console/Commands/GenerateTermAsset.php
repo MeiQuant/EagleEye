@@ -50,10 +50,8 @@ class GenerateTermAsset extends Command
         }
 
 
-        print_r($platIds);die;
 
         //查询平台下所有的资产信息
-        $results = [];
 
 
         foreach ($platIds as $platId) {
