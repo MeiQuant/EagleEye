@@ -54,11 +54,11 @@ class GenerateTermAsset extends Command
         foreach ($platIds as $platId) {
             self::$page = 1;
             while(true) {
-                $assetUrl = 'https://www.zhenrongbao.com/plat/plat_credit_assemble?pid=2&current_page='.self::$page.'&credit_plat_id='.$platId['id'].'&_access_token=&platform=pc&_=1470198705937';
+                $assetUrl = 'https://www.zhenrongbao.com/plat/plat_credit_assemble?pid=2&current_page='.self::$page.'&credit_plat_id='.$platId['id'].'&_access_token=&platform=pc&random='. rand(100000,99999);
                 $assetRes = $client->get($assetUrl, [], null);
                 $content = $assetRes->getBody()->getContents();
                 if (strpos($content, 'error_message') !== false){
-                    Log::error('error_message不为空,有可能出现错误信息或者该平台抓包完成');
+                    Log::error('error_message不为空,有可能出现错误信息或者该平台抓包完成,抓取到的内容为:' . $content);
                     break;
                 }
                 $asset = Asset::create(
