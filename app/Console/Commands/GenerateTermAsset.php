@@ -57,7 +57,7 @@ class GenerateTermAsset extends Command
         foreach ($platIds as $platId) {
             self::$page = 1;
             while(true) {
-                $assetUrl = 'https://www.zhenrongbao.com/plat/plat_credit_assemble?pid=2&current_page='.$page.'&credit_plat_id='.$platId['id'].'&_access_token=&platform=pc&_=1470198705937';
+                $assetUrl = 'https://www.zhenrongbao.com/plat/plat_credit_assemble?pid=2&current_page='.self::$page.'&credit_plat_id='.$platId['id'].'&_access_token=&platform=pc&_=1470198705937';
                 $assetRes = $client->get($assetUrl, [], null);
                 $content = $assetRes->getBody()->getContents();
                 $assetContent = json_decode($content, true);
