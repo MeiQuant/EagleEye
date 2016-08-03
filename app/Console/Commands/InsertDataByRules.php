@@ -86,6 +86,8 @@ class InsertDataByRules extends Command
                 Log::info('产品相关信息更新成功,id为'. $product->id .',时间为:' . date('Y-m-d H:i:s', time()));
                 break;
             case 'assets_info':
+                //资产类型暂时先不做处理,单独写脚本
+                break;
                 Asset::chunk(200, function($data){
                     foreach ($data as $asset) {
                         $asset = Asset::create(

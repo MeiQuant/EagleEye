@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\Inspire::class,
         \App\Console\Commands\GetCronTasks::class,
         \App\Console\Commands\InsertDataByRules::class,
-        \App\Console\Commands\GenerateAssetRule::class,
+        \App\Console\Commands\GenerateTermAsset::class,
+        \App\Console\Commands\GenerateCurrentAsset::class,
 
     ];
 
