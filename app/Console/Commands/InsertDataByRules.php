@@ -3,11 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\CronTask;
 use Log;
-use App\Data;
 use App\Rule;
-use Exception;
-use App\Exceptions\ProgramException;
 use App\Platform;
 use App\Product;
 use App\Asset;
