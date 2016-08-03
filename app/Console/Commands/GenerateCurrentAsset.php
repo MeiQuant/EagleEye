@@ -65,7 +65,7 @@ class GenerateCurrentAsset extends Command
                 foreach ($assetContent['data']['credit_assemble'] as $asset) {
                     $asset = Asset::create(
                         [
-                            'product_id' => 1,
+                            'product_id' => 2,
                             'name' => $asset['credit_name'], //资产名称
                             'profit' => round($asset['profit_years_percent'], 2) * 100, //预期收益率
                             'amount' => (int)$asset['amount'] * 100, //投资金额
@@ -77,7 +77,7 @@ class GenerateCurrentAsset extends Command
                         ]
                     );
 
-                    Log::info('资产相关信息插入成功,id为'. $asset->id .',时间为:' . date('Y-m-d H:i:s', time()));
+                    Log::info('活期资产相关信息插入成功,id为'. $asset->id .',时间为:' . date('Y-m-d H:i:s', time()));
                 }
                 $page++;
             }

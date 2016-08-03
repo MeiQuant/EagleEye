@@ -62,6 +62,10 @@ class GenerateTermAsset extends Command
                 $content = $assetRes->getBody()->getContents();
                 $assetContent = json_decode($content, true);
                 if ($assetContent['error_no'] != 0) break;
+                if (!isset($assetContent['data']['credit_assemble']) || empty($assetContent['data']['credit_assemble'])) {
+                    Log::error('wanghongjun-foreach params error, page is: ' .$page .', platform_id is :' . $platId['id']);
+                    break;
+                }
                 foreach ($assetContent['data']['credit_assemble'] as $asset) {
                     $asset = Asset::create(
                         [
@@ -77,7 +81,7 @@ class GenerateTermAsset extends Command
                         ]
                     );
 
-                    Log::info('资产相关信息插入成功,id为'. $asset->id .',时间为:' . date('Y-m-d H:i:s', time()));
+                    Log::info('定期资产相关信息插入成功,id为'. $asset->id .',时间为:' . date('Y-m-d H:i:s', time()));
                 }
                 $page++;
             }
