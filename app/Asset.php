@@ -19,14 +19,7 @@ class Asset extends Model
         [
             'id',
             'product_id',
-            'name',
-            'amount',
-            'profit', //预期收益率
-            'loan_life',
-            'start_date', //还款开始时间
-            'end_date', //还款结束时间
-            'loan_amount', //债券总额
-            'type' //资产类型
+            'content'
 
         ];
 
