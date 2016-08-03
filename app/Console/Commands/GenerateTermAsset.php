@@ -18,7 +18,7 @@ class GenerateTermAsset extends Command
 
     protected $description = 'generate term asset';
 
-
+    static $page = 1;
 
     public function __construct()
     {
@@ -50,12 +50,14 @@ class GenerateTermAsset extends Command
         }
 
 
+        print_r($platIds);die;
+
         //查询平台下所有的资产信息
         $results = [];
 
 
         foreach ($platIds as $platId) {
-            $page = 1;
+            self::$page = 1;
             while(true) {
                 $assetUrl = 'https://www.zhenrongbao.com/plat/plat_credit_assemble?pid=2&current_page='.$page.'&credit_plat_id='.$platId['id'].'&_access_token=&platform=pc&_=1470198705937';
                 $assetRes = $client->get($assetUrl, [], null);
@@ -63,7 +65,7 @@ class GenerateTermAsset extends Command
                 $assetContent = json_decode($content, true);
                 if ($assetContent['error_no'] != 0) break;
                 if (!isset($assetContent['data']['credit_assemble']) || empty($assetContent['data']['credit_assemble'])) {
-                    Log::error('wanghongjun-foreach params error, page is: ' .$page .', platform_id is :' . $platId['id']);
+                    Log::error('wanghongjun-foreach params error, page is: ' . self::$page .', platform_id is :' . $platId['id']);
                     break;
                 }
                 foreach ($assetContent['data']['credit_assemble'] as $asset) {
@@ -81,9 +83,9 @@ class GenerateTermAsset extends Command
                         ]
                     );
 
-                    Log::info('定期资产相关信息插入成功,id为'. $asset->id .',时间为:' . date('Y-m-d H:i:s', time()));
+                    Log::info('定期资产相关信息插入成功,id为'. $asset->id .',页码为:' . self::$page , '时间为:' . date('Y-m-d H:i:s', time()));
                 }
-                $page++;
+                self::$page++;
             }
         }
 
