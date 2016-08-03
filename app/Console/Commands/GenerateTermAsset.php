@@ -57,7 +57,10 @@ class GenerateTermAsset extends Command
                 $assetUrl = 'https://www.zhenrongbao.com/plat/plat_credit_assemble?pid=2&current_page='.self::$page.'&credit_plat_id='.$platId['id'].'&_access_token=&platform=pc&_=1470198705937';
                 $assetRes = $client->get($assetUrl, [], null);
                 $content = $assetRes->getBody()->getContents();
-                if (strpos($content, 'error_message') !== false) break;
+                if (strpos($content, 'error_message') !== false){
+                    Log::error('error_message不为空,有可能出现错误信息或者该平台抓包完成');
+                    break;
+                }
                 $asset = Asset::create(
                     [
                         'product_id' => 1,
