@@ -52,8 +52,14 @@ class GenerateTermAsset extends Command
         //查询平台下所有的资产信息
 
         foreach ($platIds as $platId) {
-            self::$page = 1;
+            if ($platId == 395) {
+                //临时修复curl超时的bug
+                self::$page = 388;
+            } else {
+                self::$page = 1;
+            }
             while(true) {
+
                 $param = time()+60;
                 $assetUrl = 'https://www.zhenrongbao.com/plat/plat_credit_assemble?pid=2&current_page='.self::$page.'&credit_plat_id='.$platId['id'].'&_access_token=&platform=pc&_='.$param;
                 $assetRes = $client->get($assetUrl, [], null);
@@ -68,7 +74,7 @@ class GenerateTermAsset extends Command
                         'content' => $content
                     ]
                 );
-                Log::info('定期资产相关信息插入成功,id为'. $asset->id .',页码为:' . self::$page .'时间为:' . date('Y-m-d H:i:s', time()));
+                Log::info('定期资产相关信息插入成功,id为'. $asset->id .',页码为:' . self::$page .',平台id为:'.$platId.' 时间为:' . date('Y-m-d H:i:s', time()));
                 self::$page++;
             }
         }
