@@ -1,5 +1,11 @@
 
 <?php
+
+$a = [
+    'a', 'b', 'c'
+];
+print_r($a[array_rand($a, 1)]);
+die;
 $content = file_get_contents('https://www.zhenrongbao.com/plat/plat_assemble?pid=2&current_page=1&_access_token=&platform=pc');
 $content = json_decode($content, true);
 $pagePlatCount = 0;

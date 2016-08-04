@@ -25,8 +25,10 @@ class RuleController extends Controller
     }
 
 
+
     public function store(Request $request)
     {
+
         $platformId = $request->input('platform_id', 0);
         $code = $request->input('code', '');
         $hashId = $request->input('hash_id', 0); //hash_id对应页面是个下拉框
@@ -65,7 +67,6 @@ class RuleController extends Controller
     {
 
     }
-
 
     public function destroy($id)
     {
