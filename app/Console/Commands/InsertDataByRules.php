@@ -45,11 +45,16 @@ class InsertDataByRules extends Command
                 }
                 $data['rule_id'] = $rule->id;
                 $data['type'] = $rule->type;
-                $data['content'] = eval($rule->code);
-                if (empty($data['content'])) {
-                    Log::error('抓取内容为空');
+                try {
+                    $data['content'] = eval($rule->code);
+                    if (empty($data['content'])) {
+                        throw new \Exception('抓取的内容为空');
+                    }
+                    $this->_insertData($data);
+                } catch(\Exception $e) {
+                    Log::error('数据出现错误,信息为:' . $e->getMessage() . '代码行数为:' . $e->getLine());
                 }
-                $this->_insertData($data);
+
             }
         });
 
@@ -72,6 +77,9 @@ class InsertDataByRules extends Command
                 Log::info('平台相关信息更新成功,id为'. $platform->id .',时间为:' . date('Y-m-d H:i:s', time()));
                 break;
             case 'products_info':
+                if(empty($data['total_invest_persons'])) {
+                    throw new \Exception('平台产品抓取的投资人数为空');
+                }
                 $product = Product::create(
                     [
                         'product_id' => $data['product_id'],
