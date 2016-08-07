@@ -52,7 +52,7 @@ class InsertDataByRules extends Command
                     }
                     $this->_insertData($data);
                 } catch(\Exception $e) {
-                    Log::error('数据出现错误,信息为:' . $e->getMessage() . '代码行数为:' . $e->getLine());
+                    Log::error('数据出现错误,信息为:' . $e->getMessage() . '代码文件'. $e->getFile() .'代码行数为:' . $e->getLine());
                 }
 
             }
