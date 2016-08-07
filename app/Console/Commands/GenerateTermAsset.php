@@ -53,6 +53,7 @@ class GenerateTermAsset extends Command
         $client = new \GuzzleHttp\Client([
             'base_uri' => 'https://www.zhenrongbao.com/plat/assemble?pid=2'
         ]);
+        
 
         $platIds = [];  //所有的定期产品的平台id
         $i = 1;
