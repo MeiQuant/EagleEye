@@ -24,6 +24,8 @@ class InsertDataByRules extends Command
         'assets_info'
     ];
 
+    public static $interest  = '6%-9%'; //平台的收益率
+
     public function __construct()
     {
         parent::__construct();
@@ -69,6 +71,7 @@ class InsertDataByRules extends Command
                 $platform = Platform::create(
                     [
                         'platform_id' => $data['platform_id'],
+                        'interest' => self::$interest,
                         'total_invest_amounts' => $data['total_invest_amounts'],
                         'total_invest_persons' => $data['total_invest_persons'],
                         'total_profits' => $data['total_profits']

@@ -12,7 +12,8 @@ class Platform extends Model
 
     protected $table = 'platform_data';
 
-    protected $fillable = ['id', 'platform_id', 'total_invest_amounts', 'total_invest_persons',
+    protected $fillable = ['id', 'platform_id', 'interest',
+        'total_invest_amounts', 'total_invest_persons',
         'total_profits'];
 
     protected $dates = ['deleted_at'];

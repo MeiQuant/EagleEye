@@ -18,4 +18,4 @@ Route::get('/', function () {
 
 Route::resource('rule', 'RuleController');
 
-//Route::get('');
+Route::get('getPlatforms', 'PlatformController@index');
