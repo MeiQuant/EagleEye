@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\BasePlatform;
 
 class Platform extends Model
 {
@@ -17,4 +18,11 @@ class Platform extends Model
         'total_profits'];
 
     protected $dates = ['deleted_at'];
+
+
+    public function platform()
+    {
+        return $this->belongsTo('App\BasePlatform', 'platform_id', 'id')->select(array('id', 'name'));
+    }
+
 }

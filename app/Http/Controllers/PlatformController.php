@@ -8,14 +8,14 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Rule;
 use App\Exceptions\ProgramException;
-
+use App\Platform;
 
 class PlatformController extends Controller
 {
 
     public function index()
     {
-       echo 123;die;
+       return Platform::with('platform')->paginate();
     }
 
 
