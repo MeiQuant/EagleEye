@@ -9,6 +9,7 @@ use App\Rule;
 use App\Platform;
 use App\Product;
 use App\Asset;
+use App\BasePlatform;
 
 
 class InsertDataByRules extends Command
@@ -77,6 +78,12 @@ class InsertDataByRules extends Command
                         'total_profits' => $data['total_profits']
                     ]
                 );
+                $basePlatform = BasePlatform::find($data['platform_id']);
+                $basePlatform->interest = self::$interest;
+                $basePlatform->total_invest_amounts = $data['total_invest_amounts'];
+                $basePlatform->total_invest_persons = $data['total_invest_persons'];
+                $basePlatform->total_profits = $data['total_profits'];
+                $basePlatform->save();
                 Log::info('平台相关信息更新成功,id为'. $platform->id .',时间为:' . date('Y-m-d H:i:s', time()));
                 break;
             case 'products_info':

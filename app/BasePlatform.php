@@ -12,7 +12,7 @@ class BasePlatform extends Model
 
     protected $table = 'platform';
 
-    protected $fillable = ['id', 'name'];
+    protected $fillable = ['id', 'name', 'interest', 'total_invest_amounts', 'total_invest_persons', 'total_profits'];
 
     protected $dates = ['deleted_at'];
 }
