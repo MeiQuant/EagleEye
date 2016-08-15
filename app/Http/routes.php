@@ -18,4 +18,8 @@ Route::get('/', function () {
 
 Route::resource('rule', 'RuleController');
 
+
 Route::get('getPlatforms', 'PlatformController@index');
+
+Route::get('getPlatform', 'PlatformController@getPlatformDetail'); //获取平台详情
+

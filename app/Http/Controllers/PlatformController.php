@@ -19,4 +19,9 @@ class PlatformController extends Controller
     }
 
 
+    public function getPlatformDetail(Request $request)
+    {
+        $id = (int)$request->input('id');
+
+    }
 }
