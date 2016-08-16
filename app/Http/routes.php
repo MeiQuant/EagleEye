@@ -23,3 +23,5 @@ Route::get('getPlatforms', 'PlatformController@index');
 
 Route::get('getPlatform', 'PlatformController@getPlatformDetail'); //获取平台详情
 
+Route::get('getProducts', 'ProductController@index');
+
