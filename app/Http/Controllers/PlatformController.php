@@ -59,7 +59,7 @@ class PlatformController extends Controller
         $result['product_data'] = $platform->productData->toArray();
 
 
-        print_r($result);
+       return json_encode($result);
 
 
     }

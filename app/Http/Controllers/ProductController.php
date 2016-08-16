@@ -31,24 +31,19 @@ class ProductController extends Controller
     }
 
 
-    public function getPlatformDetail(Request $request)
+    public function getProductDetail(Request $request)
     {
         $id = (int)$request->input('id');
-        $platform = BasePlatform::select(array('id', 'name', 'interest', 'total_profits as return',
-            'total_invest_amounts as volume', 'total_invest_persons as users'))->find($id);
+        $platform = BaseProduct::select(array('id', 'name', 'platform_id as platformId', 'interest',
+            'total_profits as return',
+            'total_invest_amounts as volume'))->find($id);
 
         $volumeData = array();
-        $userData = array();
         $data = $platform->toArray();
         foreach ($platform->volumeData->toArray() as $value) {
             $volumeData[] = [
                 'date' => date('Y/m/d', strtotime($value['data_created_at'])),
                 'volume' => $value['data_total_invest_amounts']
-            ];
-
-            $userData[] = [
-                'date' => date('Y/m/d', strtotime($value['data_created_at'])),
-                'users' => $value['data_total_invest_persons']
             ];
         }
 
@@ -60,14 +55,14 @@ class ProductController extends Controller
         $result['id'] = $data['id'];
         $result['name'] = $data['name'];
         $result['interest'] = $data['interest'];
+        $result['platformId'] = $data['platformId'];
+        $result['return'] = $data['return'];
         $result['volume'] = $data['volume'];
-        $result['users'] = $data['users'];
         $result['volumeData'] = $volumeData;
-        $result['userData'] = $userData;
-        $result['product_data'] = $platform->productData->toArray();
+
+        return json_encode($result);
 
 
-        print_r($result);
 
 
     }
