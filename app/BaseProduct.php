@@ -12,7 +12,8 @@ class BaseProduct extends Model
 
     protected $table = 'product';
 
-    protected $fillable = ['id', 'platform_id', 'name'];
+    protected $fillable = ['id', 'platform_id', 'name', 'interest', 'total_invest_amounts', 'total_invest_persons',
+        'total_profits'];
 
     protected $dates = ['deleted_at'];
 }

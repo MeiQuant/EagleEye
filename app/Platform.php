@@ -22,10 +22,10 @@ class Platform extends Model
     protected $dates = ['deleted_at'];
 
 
-    public function platform()
-    {
-        return $this->belongsTo('App\BasePlatform', 'platform_id', 'id')->select(array('id', 'name'));
-    }
+//    public function platform()
+//    {
+//        return $this->belongsTo('App\BasePlatform', 'platform_id', 'id')->select(array('id', 'name'));
+//    }
 
 
 
