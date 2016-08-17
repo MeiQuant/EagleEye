@@ -17,15 +17,23 @@ use App\BasePlatform;
 class PlatformController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        return BasePlatform::paginate();
+        $callback = $request->input('callback');
+        $result = BasePlatform::paginate();
+
+        if (empty($callback)) {
+            return json_encode($result);
+        } else {
+            return json_encode($callback . '(' . $result . ')');
+        }
     }
 
 
     public function getPlatformDetail(Request $request)
     {
         $id = (int)$request->input('id');
+        $callback = $request->input('callback');
         $platform = BasePlatform::select(array('id', 'name', 'interest', 'total_profits as return',
             'total_invest_amounts as volume', 'total_invest_persons as users'))->find($id);
 
@@ -59,8 +67,11 @@ class PlatformController extends Controller
         $result['product_data'] = $platform->productData->toArray();
 
 
-       return json_encode($result);
-
+        if (empty($callback)) {
+            return json_encode($result);
+        } else {
+            return json_encode($callback . '(' . $result . ')');
+        }
 
     }
 }

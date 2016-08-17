@@ -17,9 +17,10 @@ use App\BaseProduct;
 class ProductController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        return BaseProduct::select(
+        $callback = $request->input('callback');
+        $result = BaseProduct::select(
             array(
                 'id',
                 'name',
@@ -28,12 +29,20 @@ class ProductController extends Controller
                 'total_invest_amounts as volume'
             )
         )->paginate();
+
+        if (empty($callback)) {
+            return json_encode($result);
+        } else {
+            return json_encode($callback . '(' . $result . ')');
+        }
+
     }
 
 
     public function getProductDetail(Request $request)
     {
         $id = (int)$request->input('id');
+        $callback = $request->input('callback');
         $platform = BaseProduct::select(array('id', 'name', 'platform_id as platformId', 'interest',
             'total_profits as return',
             'total_invest_amounts as volume'))->find($id);
@@ -60,8 +69,11 @@ class ProductController extends Controller
         $result['volume'] = $data['volume'];
         $result['volumeData'] = $volumeData;
 
-        return json_encode($result);
-
+        if (empty($callback)) {
+            return json_encode($result);
+        } else {
+            return json_encode($callback . '(' . $result . ')');
+        }
 
 
 
