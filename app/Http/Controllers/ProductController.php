@@ -31,9 +31,9 @@ class ProductController extends Controller
         )->paginate();
 
         if (empty($callback)) {
-            return json_encode($result);
+            return $result;
         } else {
-            return json_encode($callback . '(' . $result . ')');
+            return $callback . '(' . $result->toJson() . ')';
         }
 
     }
@@ -72,7 +72,7 @@ class ProductController extends Controller
         if (empty($callback)) {
             return json_encode($result);
         } else {
-            return json_encode($callback . '(' . $result . ')');
+            return $callback . '(' . json_encode($result) . ')';
         }
 
 

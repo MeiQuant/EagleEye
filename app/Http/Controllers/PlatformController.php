@@ -22,10 +22,11 @@ class PlatformController extends Controller
         $callback = $request->input('callback');
         $result = BasePlatform::paginate();
 
+
         if (empty($callback)) {
-            return json_encode($result);
+            return $result;
         } else {
-            return json_encode($callback . '(' . $result . ')');
+            return  $callback .'(' . $result->toJson() . ')';
         }
     }
 
@@ -66,11 +67,10 @@ class PlatformController extends Controller
         $result['userData'] = $userData;
         $result['product_data'] = $platform->productData->toArray();
 
-
         if (empty($callback)) {
             return json_encode($result);
         } else {
-            return json_encode($callback . '(' . $result . ')');
+            return $callback . '(' . json_encode($result) . ')';
         }
 
     }
