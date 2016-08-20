@@ -20,7 +20,8 @@ class PlatformController extends Controller
     public function index(Request $request)
     {
         $callback = $request->input('callback');
-        $result = BasePlatform::paginate();
+        $result = BasePlatform::select(array('id', 'name', 'interest', 'total_profits as return',
+            'total_invest_amounts as volume', 'total_invest_persons as users'))->paginate();
 
 
         if (empty($callback)) {
@@ -60,6 +61,7 @@ class PlatformController extends Controller
 
         $result['id'] = $data['id'];
         $result['name'] = $data['name'];
+        $result['return'] = $data['return'];
         $result['interest'] = $data['interest'];
         $result['volume'] = $data['volume'];
         $result['users'] = $data['users'];
